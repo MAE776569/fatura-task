@@ -1,0 +1,29 @@
+{
+  "name": "fatura",
+  "version": "1.0.0",
+  "description": "fatura task",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MAE776569/fatura-task.git"
+  },
+  "author": "Mohamed Ahmed",
+  "bugs": {
+    "url": "https://github.com/MAE776569/fatura-task/issues"
+  },
+  "homepage": "https://github.com/MAE776569/fatura-task#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
