@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const { query, validationResult } = require("express-validator")
+const { query, param, validationResult } = require("express-validator")
 const paginationMiddleware = require("../middlewares/pagination")
 
 router.get(
@@ -50,6 +50,29 @@ router.get(
       if (err) return next(err)
       return res.json({ data })
     })
+  }
+)
+
+router.put(
+  "/:id/toggle-featured",
+  [param("id").isInt({ min: 1 }).toInt()],
+  (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty())
+      return res.status(404).json({ message: "Invalid id" })
+
+    db.query(
+      `UPDATE products
+      SET featured = NOT featured
+      WHERE id = ?`,
+      [req.params.id],
+      (err, data) => {
+        if (err) return next(err)
+        if (data.changedRows === 0)
+          return res.status(404).json({ message: "Product not found" })
+        return res.json({ success: true })
+      }
+    )
   }
 )
 
