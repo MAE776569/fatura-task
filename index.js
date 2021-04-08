@@ -3,6 +3,7 @@ const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
 const mysql = require("mysql")
+const routes = require("./routes")
 
 // Connect to database
 const db = mysql.createConnection({
@@ -20,6 +21,7 @@ db.connect((err) => {
 global.db = db
 
 app.use(bodyParser.json())
+app.use(routes)
 
 // Error Handler
 app.use((err, req, res, next) => {
