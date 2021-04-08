@@ -1,22 +1,15 @@
 const router = require("express").Router()
 const { query, validationResult } = require("express-validator")
+const paginationMiddleware = require("../middlewares/pagination")
 
 router.get(
   "/",
-  [
-    query("page").isInt({ min: 1 }).toInt(),
-    query("limit").isInt({ min: 1 }).toInt(),
-    query("category").isInt({ min: 1 }).toInt(),
-  ],
+  paginationMiddleware,
+  [query("category").isInt({ min: 1 }).toInt()],
   (req, res, next) => {
     const errors = validationResult(req).mapped()
-    const {
-      page: pageQuery,
-      limit: limitQuery,
-      category: categoryQuery,
-    } = req.query
-    const page = errors.page ? 1 : pageQuery
-    const limit = errors.limit ? 25 : limitQuery
+    const { page, limit } = req.pagination
+    const { category: categoryQuery } = req.query
     const category = errors.category ? undefined : categoryQuery
 
     const sql = category
